@@ -1,0 +1,38 @@
+﻿@{
+    if(!WebSecurity.IsAuthenticated){
+        Response.Redirect(@Href("~/Account/Login?returnUrl="+Request.Url.LocalPath));
+    }
+    Layout="~/_SiteLayout.cshtml";
+    var db= Database.Open("StarterSite");
+    var selectQueryString="SELECT BlogPost.Title,BlogPost.Description,BlogPost.UserId  FROM BlogPost ORDER BY UserId DESC";
+    Page.Title = "Home Page";
+}
+
+
+@section featured {
+
+<h1>Posts List</h1>
+        <div style="overflow-x:auto;">
+        <table id="customers">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>UserId</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach(var row in db.Query(selectQueryString)){
+                <tr>
+                    <td>@row.Title</td>
+                    <td>@row.Description</td>
+                    <td>@row.UserId</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+            </div>
+}
+
+
+

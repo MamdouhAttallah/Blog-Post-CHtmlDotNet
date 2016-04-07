@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Posts";
+     var db= Database.Open("StarterSite");
+    var title=Request["title"];
+    var description=Request["description"];
+    var userId = WebSecurity.CurrentUserId;
+}
+@{
+if(IsPost){
+        title=Request["title"];
+        if(title.IsEmpty()){
+            ModelState.AddError("title","Title name is required");
+        }
+        description=Request["description"];
+        if(description.IsEmpty()){
+             ModelState.AddError("description","title description is required");
+        }
+if(ModelState.IsValid){
+            var insertQuery="INSERT INTO BlogPost (Title,Description,UserId)"+"VALUES (@0,@1,@2)";
+            db.Execute(insertQuery,title,description,userId);
+            Response.Redirect(@Href("~/Default"));
+        }
+}
+}
+<aside>
+    <h3>Posts</h3>
+    <p>
+       
+    </p>
+    <ul>
+        <li><a href="~/Posts">Edit Posts</a></li>
+        <li><a href="~/Posts">Add Posts</a></li>
+        <li><a href="~/Contact">Delete Posts</a></li>
+    </ul>
+</aside>
+<hgroup class="title">
+    <h1>@Page.Title.</h1>
+    <h2>You can create posts here</h2>
+</hgroup>
+
+
+  <form method="post" action="">
+    <fieldset>
+    <legend>Add Post</legend>
+        <div>
+    <label for="title">Ttile Of Your Post:</label>
+   <input type="text" height="30" width="60" name="title" value="@Request["title"]">
+    </div>
+    <div>
+    <label for="title">Description Of Your Post:</label>
+   <textarea  style="height:200px;background-color: bisque;padding: 10px;"  cols="40" rows="5" name="description" value="@Request["description"]"></textarea>
+    </div>
+    </fieldset>
+      <input type="submit" value="Submit Your Post" name="submit">
+</form>

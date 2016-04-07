@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "About";
+    var db = Database.Open("Users");
+    var selectQueryString = "SELECT * FROM SiteUsers ORDER BY UserName";
+ }
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>All Users</title>
+   <style>
+       table, th, td {
+         border: solid 1px #bbbbbb;
+         border-collapse: collapse;
+         padding: 2px;
+       }
+    </style>
+ </head>
+ <body>
+   <h1>Small Bakery Products</h1>
+   <table>
+       <thead>
+           <tr>
+               <th>Id</th>
+               <th>Product</th>
+               <th>Description</th>
+       <th>Price</th>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach(var row in db.Query(selectQueryString)){
+            <tr>
+               <td>@row.id</td>
+                   <td>@row.UserName</td>
+                   <td>@row.Password</td>
+                   <td>@row.Role</td>
+            </tr>
+           }
+       </tbody>
+   </table>
+ </body>
+</html>
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+        
+    </body>
+</html>
